@@ -50,13 +50,22 @@
     input[list]::-webkit-calendar-picker-indicator { opacity: 0.6; padding: 4px; }
     .clear-data-btn { background: #fee8e8; border: none; border-radius: 40px; padding: 8px 16px; font-size: 0.75rem; font-weight: 500; color: #b13a3a; cursor: pointer; transition: 0.1s; margin-left: 8px; }
     .clear-data-btn:active { background: #fdd5d5; }
-    .status-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.75rem; color: #4a6f8e; }
+    .status-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.75rem; color: #4a6f8e; flex-wrap: wrap; gap: 6px; }
     .status-bar .saved-indicator { display: flex; align-items: center; gap: 4px; }
     .status-bar .saved-indicator .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #4caf50; }
     .status-bar .saved-indicator .dot.gray { background: #b0b0b0; }
     .backup-restore { display: flex; gap: 10px; margin: 12px 0 6px; flex-wrap: wrap; }
     .backup-restore button { background: #e6edf6; border: none; border-radius: 40px; padding: 6px 16px; font-size: 0.75rem; color: #1a4f77; cursor: pointer; }
     .backup-restore input[type="file"] { display: none; }
+    .github-import { background: #f0f4fe; border-radius: 20px; padding: 12px 16px; margin: 10px 0 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border: 1px solid #d5e0ec; }
+    .github-import input { flex: 1; min-width: 150px; padding: 10px 14px; border-radius: 40px; border: 1px solid #cbd8e6; background: white; font-size: 0.85rem; outline: none; }
+    .github-import input:focus { border-color: #2d7bb6; }
+    .github-import button { background: #2d7bb6; color: white; border: none; border-radius: 40px; padding: 10px 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
+    .github-import button:active { background: #1f5b8e; }
+    .github-import .status { font-size: 0.75rem; color: #4a6f8e; width: 100%; }
+    .github-import .status.loading { color: #2d7bb6; }
+    .github-import .status.success { color: #4caf50; }
+    .github-import .status.error { color: #d32f2f; }
     @media (max-width: 480px) {
       th:nth-child(1), td:nth-child(1) { width: 16%; }
       th:nth-child(2), td:nth-child(2) { width: 26%; }
@@ -77,6 +86,13 @@
     <input type="file" id="fileInput" accept=".xlsx,.xls">
     <span class="file-status" id="fileStatus">nema datoteke</span>
     <button class="clear-data-btn" id="clearDataBtn">🗑️ Obriši</button>
+  </div>
+
+  <!-- GitHub Import Section -->
+  <div class="github-import">
+    <input type="text" id="githubUrl" placeholder="GitHub URL Excel datoteke" value="https://raw.githubusercontent.com/korisnik/repo/main/ASORTIMAN.xlsx">
+    <button id="githubImportBtn">📥 Uvezi s GitHub-a</button>
+    <span class="status" id="githubStatus">Unesite URL i kliknite za uvoz</span>
   </div>
 
   <div class="status-bar">
@@ -208,6 +224,11 @@
     const backupBtn = document.getElementById('backupBtn');
     const restoreBtn = document.getElementById('restoreBtn');
     const restoreInput = document.getElementById('restoreInput');
+    
+    // GitHub import elements
+    const githubUrl = document.getElementById('githubUrl');
+    const githubImportBtn = document.getElementById('githubImportBtn');
+    const githubStatus = document.getElementById('githubStatus');
 
     function normalizeStr(str) { return str ? String(str).trim() : ''; }
 
@@ -313,11 +334,11 @@
       itemCount.textContent = `${filtered.length} artikala`;
     }
 
-    // ---------- Process Excel ----------
-    async function processExcelData(workbook) {
+    // ---------- Process Excel Data ----------
+    async function processExcelData(workbook, sourceName = '') {
       const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
       const json = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
-      if (!json || !json.length) { alert('Excel datoteka je prazna ili neispravna.'); return; }
+      if (!json || !json.length) { alert('Excel datoteka je prazna ili neispravna.'); return false; }
 
       const headers = Object.keys(json[0]);
       const findKey = (patterns) => {
@@ -339,7 +360,7 @@
 
       if (!keyLokacija || !keyAdresa || !keyGrad || !keyAwtSifra || !keyArtikl || !keyEAN) {
         alert('Neki očekivani stupci nisu pronađeni. Provjerite header: LOKACIJA, ADRESA, GRAD, AWT ŠIFRA, ARTIKL, EAN, VRSTA, PODVRSTA');
-        return;
+        return false;
       }
 
       const newData = [];
@@ -368,7 +389,7 @@
         }
       }
 
-      if (!newData.length) { alert('Nema valjanih podataka za uvoz.'); return; }
+      if (!newData.length) { alert('Nema valjanih podataka za uvoz.'); return false; }
 
       fullData = newData;
       locationSet = locSet;
@@ -379,13 +400,79 @@
       updateLocationDatalist();
       populateFilters();
       updateDataInfo();
-      fileStatus.textContent = `✅ ${fullData.length} redova`;
+      fileStatus.textContent = sourceName ? `✅ ${fullData.length} redova (${sourceName})` : `✅ ${fullData.length} redova`;
 
       const savedLoc = localStorage.getItem('asortimanSelectedLocation');
       if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
       else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
       else locationInput.value = '';
       renderTable();
+      return true;
+    }
+
+    // ---------- GitHub Import ----------
+    async function importFromGitHub(url) {
+      githubStatus.textContent = '⏳ Preuzimanje datoteke...';
+      githubStatus.className = 'status loading';
+      
+      try {
+        // Podrška za raw GitHub URL-ove
+        let finalUrl = url;
+        if (url.includes('github.com') && !url.includes('raw.githubusercontent.com')) {
+          // Pretvori u raw URL
+          finalUrl = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+        }
+        
+        const response = await fetch(finalUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        const contentType = response.headers.get('content-type') || '';
+        let data;
+        
+        if (contentType.includes('json') || url.endsWith('.json')) {
+          // JSON backup
+          const jsonData = await response.json();
+          if (!Array.isArray(jsonData)) throw new Error('JSON nije niz podataka');
+          fullData = jsonData;
+          locationSet = new Set();
+          locationMap = new Map();
+          for (const row of fullData) {
+            locationSet.add(row.lokacija);
+            if (!locationMap.has(row.lokacija)) locationMap.set(row.lokacija, { adresa: row.adresa || '', grad: row.grad || '' });
+          }
+          await saveAllData(fullData);
+          updateLocationDatalist();
+          populateFilters();
+          updateDataInfo();
+          updateSaveStatus(true);
+          fileStatus.textContent = `✅ ${fullData.length} redova (GitHub JSON)`;
+          const savedLoc = localStorage.getItem('asortimanSelectedLocation');
+          if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
+          else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
+          renderTable();
+          githubStatus.textContent = `✅ Uspješno uvezeno ${fullData.length} artikala`;
+          githubStatus.className = 'status success';
+          return;
+        }
+        
+        // Excel datoteka
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        const success = await processExcelData(workbook, 'GitHub');
+        if (success) {
+          githubStatus.textContent = `✅ Uspješno uvezeno ${fullData.length} artikala`;
+          githubStatus.className = 'status success';
+        } else {
+          githubStatus.textContent = '❌ Greška pri obradi Excel datoteke';
+          githubStatus.className = 'status error';
+        }
+      } catch (error) {
+        console.error('GitHub import error:', error);
+        githubStatus.textContent = `❌ Greška: ${error.message}`;
+        githubStatus.className = 'status error';
+      }
     }
 
     // ---------- Load from DB ----------
@@ -480,7 +567,7 @@
         try {
           const data = new Uint8Array(ev.target.result);
           const workbook = XLSX.read(data, { type: 'array' });
-          await processExcelData(workbook);
+          await processExcelData(workbook, file.name);
           fileStatus.textContent = `📄 ${file.name}`;
         } catch(err) { alert('Greška pri čitanju: ' + err.message); }
       };
@@ -488,6 +575,24 @@
     });
 
     importBtn.addEventListener('click', () => fileInput.click());
+
+    // GitHub import
+    githubImportBtn.addEventListener('click', () => {
+      const url = githubUrl.value.trim();
+      if (!url) {
+        githubStatus.textContent = '⚠️ Molimo unesite URL';
+        githubStatus.className = 'status error';
+        return;
+      }
+      importFromGitHub(url);
+    });
+
+    // Enter tipka za GitHub URL
+    githubUrl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        githubImportBtn.click();
+      }
+    });
 
     locationInput.addEventListener('input', function() {
       const val = this.value.trim();
@@ -536,22 +641,15 @@
     // ---------- Init ----------
     loadFromDB();
 
-    // ---------- Service Worker (inline) ----------
+    // ---------- Service Worker ----------
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
+      const swCode = `const CACHE="asortiman-v2"; const FILES=["./"]; self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)))); self.addEventListener("fetch",e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
+      const blob = new Blob([swCode], { type: 'text/javascript' });
+      const url = URL.createObjectURL(blob);
+      navigator.serviceWorker.register(url).catch(() => {});
     }
 
   })();
-</script>
-
-<!-- Inline Service Worker -->
-<script id="swScript" type="text/javascript">
-  if ('serviceWorker' in navigator) {
-    const swCode = `const CACHE="asortiman-v2"; const FILES=["./"]; self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)))); self.addEventListener("fetch",e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
-    const blob = new Blob([swCode], { type: 'text/javascript' });
-    const url = URL.createObjectURL(blob);
-    navigator.serviceWorker.register(url).catch(() => {});
-  }
 </script>
 </body>
 </html>
