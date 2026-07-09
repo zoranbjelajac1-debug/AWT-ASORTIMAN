@@ -31,19 +31,21 @@
     .filter-group select { width: 100%; padding: 10px 8px; border-radius: 30px; border: 1px solid #d5e0ec; background: white; font-size: 0.9rem; color: #0f2b44; }
     .reset-filters { background: #e6edf6; border: none; border-radius: 40px; padding: 8px 18px; font-size: 0.8rem; font-weight: 500; color: #1a4f77; cursor: pointer; transition: 0.1s; margin-left: auto; align-self: center; height: 42px; white-space: nowrap; }
     .reset-filters:active { background: #cddcee; }
-    .table-wrapper { margin-top: 12px; border-radius: 20px; overflow-x: auto; background: white; border: 1px solid #e9eff6; box-shadow: 0 2px 8px rgba(0,0,0,0.02); max-height: 60vh; overflow-y: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 360px; table-layout: fixed; }
-    th { background: #eef4fb; color: #1a3b58; font-weight: 600; padding: 12px 10px; text-align: left; border-bottom: 2px solid #d0ddee; position: sticky; top: 0; z-index: 2; word-break: break-word; font-size: 0.82rem; }
-    td { padding: 10px 10px; border-bottom: 1px solid #e5ecf5; vertical-align: top; color: #1f3852; word-break: break-word; white-space: normal; line-height: 1.5; font-size: 0.85rem; }
-    tr:last-child td { border-bottom: none; }
-    th:nth-child(1), td:nth-child(1) { width: 14%; }
-    th:nth-child(2), td:nth-child(2) { width: 28%; }
-    th:nth-child(3), td:nth-child(3) { width: 18%; }
-    th:nth-child(4), td:nth-child(4) { width: 20%; }
-    th:nth-child(5), td:nth-child(5) { width: 20%; }
-    .empty-row td { text-align: center; color: #798da3; padding: 28px 8px; font-style: italic; }
-    .badge-vrsta { background: #dfe9f5; padding: 4px 12px; border-radius: 30px; font-size: 0.8rem; font-weight: 500; color: #1a4b74; display: inline-block; word-break: break-word; line-height: 1.4; }
-    .badge-podvrsta { background: #eef3fa; padding: 4px 12px; border-radius: 30px; font-size: 0.78rem; color: #2d5580; display: inline-block; word-break: break-word; line-height: 1.4; }
+    
+    /* CARD LAYOUT umjesto tablice */
+    .cards-wrapper { margin-top: 12px; border-radius: 20px; background: white; border: 1px solid #e9eff6; box-shadow: 0 2px 8px rgba(0,0,0,0.02); max-height: 60vh; overflow-y: auto; padding: 12px; }
+    .item-card { background: #f8faff; border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #2d7bb6; box-shadow: 0 1px 4px rgba(0,0,0,0.04); transition: 0.1s; }
+    .item-card:last-child { margin-bottom: 0; }
+    .item-card .card-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #edf2f9; }
+    .item-card .card-row:last-child { border-bottom: none; }
+    .item-card .card-label { font-size: 0.7rem; font-weight: 600; color: #5b7c9a; text-transform: uppercase; letter-spacing: 0.3px; min-width: 70px; }
+    .item-card .card-value { font-size: 0.9rem; color: #1a3b58; text-align: right; word-break: break-word; flex: 1; margin-left: 10px; }
+    .item-card .card-value.sifra { font-weight: 600; color: #0b2b4a; }
+    .item-card .badge-vrsta { background: #dfe9f5; padding: 2px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 500; color: #1a4b74; display: inline-block; }
+    .item-card .badge-podvrsta { background: #eef3fa; padding: 2px 12px; border-radius: 30px; font-size: 0.72rem; color: #2d5580; display: inline-block; }
+    .item-card .card-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; margin-top: 2px; }
+    .empty-state { text-align: center; color: #798da3; padding: 28px 8px; font-style: italic; }
+    
     .footer-note { margin-top: 20px; font-size: 0.75rem; color: #6b85a0; text-align: center; border-top: 1px solid #dde6f0; padding-top: 18px; }
     .import-btn { background: #eef3f9; border: none; border-radius: 40px; padding: 12px 20px; font-weight: 500; color: #1f5b8e; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.1s; width: 100%; justify-content: center; margin-top: 8px; }
     .import-btn:active { background: #dce6f2; }
@@ -66,14 +68,13 @@
     .github-import .status.loading { color: #2d7bb6; }
     .github-import .status.success { color: #4caf50; }
     .github-import .status.error { color: #d32f2f; }
+    .view-toggle { display: flex; gap: 8px; margin: 8px 0; justify-content: flex-end; }
+    .view-toggle button { background: #eef3f9; border: none; border-radius: 30px; padding: 6px 14px; font-size: 0.75rem; color: #1a4f77; cursor: pointer; }
+    .view-toggle button.active { background: #1f5b8e; color: white; }
+    .view-toggle button:active { transform: scale(0.95); }
     @media (max-width: 480px) {
-      th:nth-child(1), td:nth-child(1) { width: 16%; }
-      th:nth-child(2), td:nth-child(2) { width: 26%; }
-      th:nth-child(3), td:nth-child(3) { width: 16%; }
-      th:nth-child(4), td:nth-child(4) { width: 21%; }
-      th:nth-child(5), td:nth-child(5) { width: 21%; }
-      table { font-size: 0.78rem; }
-      .badge-vrsta, .badge-podvrsta { font-size: 0.72rem; padding: 3px 10px; }
+      .item-card .card-row { flex-wrap: wrap; gap: 2px; }
+      .item-card .card-value { text-align: left; margin-left: 0; width: 100%; }
     }
   </style>
 </head>
@@ -88,7 +89,7 @@
     <button class="clear-data-btn" id="clearDataBtn">🗑️ Obriši</button>
   </div>
 
-  <!-- GitHub Import Section -->
+  <!-- GitHub Import -->
   <div class="github-import">
     <input type="text" id="githubUrl" placeholder="GitHub URL Excel datoteke" value="https://raw.githubusercontent.com/korisnik/repo/main/ASORTIMAN.xlsx">
     <button id="githubImportBtn">📥 Uvezi s GitHub-a</button>
@@ -124,12 +125,25 @@
     <button class="reset-filters" id="resetFiltersBtn">✕ Poništi filtere</button>
   </div>
 
-  <div class="table-wrapper">
+  <!-- View Toggle -->
+  <div class="view-toggle">
+    <button id="viewCards" class="active">📇 Kartice</button>
+    <button id="viewTable">📋 Tablica</button>
+  </div>
+
+  <!-- Cards View -->
+  <div class="cards-wrapper" id="cardsContainer">
+    <div class="empty-state">Uvezite Excel datoteku za prikaz</div>
+  </div>
+
+  <!-- Table View (skriven po defaultu) -->
+  <div class="table-wrapper" id="tableContainer" style="display:none;">
     <table>
       <thead><tr><th>AWT ŠIFRA</th><th>ARTIKL</th><th>EAN</th><th>VRSTA</th><th>PODVRSTA</th></tr></thead>
-      <tbody id="tableBody"><tr class="empty-row"><td colspan="5">Uvezite Excel datoteku za prikaz</td></tr></tbody>
+      <tbody id="tableBody"><tr><td colspan="5" class="empty-state">Uvezite Excel datoteku</td></tr></tbody>
     </table>
   </div>
+  
   <div style="margin-top: 8px; display: flex; justify-content: flex-end; font-size: 0.8rem; color: #3f6182;">
     <span id="itemCount">0 artikala</span>
   </div>
@@ -203,6 +217,7 @@
     let locationSet = new Set();
     let locationMap = new Map();
     let currentLocation = '';
+    let currentView = 'cards'; // 'cards' ili 'table'
 
     // DOM refs
     const locationInput = document.getElementById('locationInput');
@@ -210,6 +225,8 @@
     const addrDisplay = document.getElementById('addrDisplay');
     const cityDisplay = document.getElementById('cityDisplay');
     const tableBody = document.getElementById('tableBody');
+    const cardsContainer = document.getElementById('cardsContainer');
+    const tableContainer = document.getElementById('tableContainer');
     const filterVrsta = document.getElementById('filterVrsta');
     const filterPodvrsta = document.getElementById('filterPodvrsta');
     const resetBtn = document.getElementById('resetFiltersBtn');
@@ -224,8 +241,8 @@
     const backupBtn = document.getElementById('backupBtn');
     const restoreBtn = document.getElementById('restoreBtn');
     const restoreInput = document.getElementById('restoreInput');
-    
-    // GitHub import elements
+    const viewCardsBtn = document.getElementById('viewCards');
+    const viewTableBtn = document.getElementById('viewTable');
     const githubUrl = document.getElementById('githubUrl');
     const githubImportBtn = document.getElementById('githubImportBtn');
     const githubStatus = document.getElementById('githubStatus');
@@ -293,7 +310,56 @@
       else filterPodvrsta.value = '';
     }
 
-    function renderTable() {
+    // ---------- RENDER: Cards ----------
+    function renderCards(data) {
+      if (!data || !data.length) {
+        cardsContainer.innerHTML = `<div class="empty-state">${fullData.length === 0 ? 'Uvezite Excel datoteku' : 'Nema artikala za odabrane filtere'}</div>`;
+        return;
+      }
+      cardsContainer.innerHTML = data.map(row => `
+        <div class="item-card">
+          <div class="card-row">
+            <span class="card-label">AWT Šifra</span>
+            <span class="card-value sifra">${row.awtSifra || '-'}</span>
+          </div>
+          <div class="card-row">
+            <span class="card-label">Artikl</span>
+            <span class="card-value">${row.artikl || '-'}</span>
+          </div>
+          <div class="card-row">
+            <span class="card-label">EAN</span>
+            <span class="card-value">${row.ean || '-'}</span>
+          </div>
+          <div class="card-row" style="border-bottom: none;">
+            <span class="card-label">Kategorija</span>
+            <span class="card-value">
+              <div class="card-tags">
+                ${row.vrsta ? `<span class="badge-vrsta">${row.vrsta}</span>` : ''}
+                ${row.podvrsta ? `<span class="badge-podvrsta">${row.podvrsta}</span>` : ''}
+              </div>
+            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ---------- RENDER: Table ----------
+    function renderTable(data) {
+      if (!data || !data.length) {
+        tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">${fullData.length === 0 ? 'Uvezite Excel datoteku' : 'Nema artikala za odabrane filtere'}</td></tr>`;
+        return;
+      }
+      tableBody.innerHTML = data.map(row => `<tr>
+        <td><strong>${row.awtSifra || ''}</strong></td>
+        <td>${row.artikl || ''}</td>
+        <td>${row.ean || ''}</td>
+        <td><span class="badge-vrsta">${row.vrsta || ''}</span></td>
+        <td><span class="badge-podvrsta">${row.podvrsta || ''}</span></td>
+      </tr>`).join('');
+    }
+
+    // ---------- Glavni render ----------
+    function render() {
       let loc = locationInput.value.trim();
       if (loc && !locationSet.has(loc)) {
         const match = Array.from(locationSet).find(l => l.toLowerCase().includes(loc.toLowerCase()));
@@ -305,7 +371,9 @@
       updateAddressDisplay(loc);
 
       if (!loc || fullData.length === 0) {
-        tableBody.innerHTML = `<tr class="empty-row"><td colspan="5">${fullData.length === 0 ? 'Uvezite Excel datoteku' : 'Odaberite lokaciju'}</td></tr>`;
+        const emptyMsg = fullData.length === 0 ? 'Uvezite Excel datoteku' : 'Odaberite lokaciju';
+        cardsContainer.innerHTML = `<div class="empty-state">${emptyMsg}</div>`;
+        tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">${emptyMsg}</td></tr>`;
         itemCount.textContent = '0 artikala';
         return;
       }
@@ -318,21 +386,33 @@
 
       filtered.sort((a,b) => (a.vrsta||'').localeCompare(b.vrsta||'hr') || (a.podvrsta||'').localeCompare(b.podvrsta||'hr'));
 
-      if (!filtered.length) {
-        tableBody.innerHTML = `<tr class="empty-row"><td colspan="5">Nema artikala za ovaj filter</td></tr>`;
-        itemCount.textContent = '0 artikala';
-        return;
-      }
-
-      tableBody.innerHTML = filtered.map(row => `<tr>
-        <td><strong>${row.awtSifra || ''}</strong></td>
-        <td>${row.artikl || ''}</td>
-        <td>${row.ean || ''}</td>
-        <td><span class="badge-vrsta">${row.vrsta || ''}</span></td>
-        <td><span class="badge-podvrsta">${row.podvrsta || ''}</span></td>
-      </tr>`).join('');
       itemCount.textContent = `${filtered.length} artikala`;
+
+      if (currentView === 'cards') {
+        cardsContainer.style.display = 'block';
+        tableContainer.style.display = 'none';
+        renderCards(filtered);
+      } else {
+        cardsContainer.style.display = 'none';
+        tableContainer.style.display = 'block';
+        renderTable(filtered);
+      }
     }
+
+    // ---------- View toggle ----------
+    viewCardsBtn.addEventListener('click', () => {
+      currentView = 'cards';
+      viewCardsBtn.className = 'active';
+      viewTableBtn.className = '';
+      render();
+    });
+
+    viewTableBtn.addEventListener('click', () => {
+      currentView = 'table';
+      viewTableBtn.className = 'active';
+      viewCardsBtn.className = '';
+      render();
+    });
 
     // ---------- Process Excel Data ----------
     async function processExcelData(workbook, sourceName = '') {
@@ -406,7 +486,7 @@
       if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
       else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
       else locationInput.value = '';
-      renderTable();
+      render();
       return true;
     }
 
@@ -416,23 +496,18 @@
       githubStatus.className = 'status loading';
       
       try {
-        // Podrška za raw GitHub URL-ove
         let finalUrl = url;
         if (url.includes('github.com') && !url.includes('raw.githubusercontent.com')) {
-          // Pretvori u raw URL
           finalUrl = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
         }
         
         const response = await fetch(finalUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         
         const contentType = response.headers.get('content-type') || '';
         let data;
         
         if (contentType.includes('json') || url.endsWith('.json')) {
-          // JSON backup
           const jsonData = await response.json();
           if (!Array.isArray(jsonData)) throw new Error('JSON nije niz podataka');
           fullData = jsonData;
@@ -451,13 +526,12 @@
           const savedLoc = localStorage.getItem('asortimanSelectedLocation');
           if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
           else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
-          renderTable();
+          render();
           githubStatus.textContent = `✅ Uspješno uvezeno ${fullData.length} artikala`;
           githubStatus.className = 'status success';
           return;
         }
         
-        // Excel datoteka
         const arrayBuffer = await response.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const success = await processExcelData(workbook, 'GitHub');
@@ -495,7 +569,7 @@
         const savedLoc = localStorage.getItem('asortimanSelectedLocation');
         if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
         else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
-        renderTable();
+        render();
         return true;
       } catch(e) { console.warn('DB load error', e); return false; }
     }
@@ -536,7 +610,7 @@
         const savedLoc = localStorage.getItem('asortimanSelectedLocation');
         if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
         else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
-        renderTable();
+        render();
         alert('Restore uspješan!');
       } catch(err) { alert('Greška pri restore: ' + err.message); }
       restoreInput.value = '';
@@ -555,7 +629,7 @@
       updateDataInfo();
       updateSaveStatus(false);
       fileStatus.textContent = 'nema datoteke';
-      renderTable();
+      render();
     });
 
     // ---------- Events ----------
@@ -576,7 +650,6 @@
 
     importBtn.addEventListener('click', () => fileInput.click());
 
-    // GitHub import
     githubImportBtn.addEventListener('click', () => {
       const url = githubUrl.value.trim();
       if (!url) {
@@ -587,27 +660,25 @@
       importFromGitHub(url);
     });
 
-    // Enter tipka za GitHub URL
     githubUrl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        githubImportBtn.click();
-      }
+      if (e.key === 'Enter') githubImportBtn.click();
     });
 
     locationInput.addEventListener('input', function() {
       const val = this.value.trim();
-      if (val === '') { localStorage.removeItem('asortimanSelectedLocation'); renderTable(); return; }
+      if (val === '') { localStorage.removeItem('asortimanSelectedLocation'); render(); return; }
       if (locationSet.has(val)) {
         localStorage.setItem('asortimanSelectedLocation', val);
-        renderTable();
+        render();
       } else {
         const matches = Array.from(locationSet).filter(l => l.toLowerCase().includes(val.toLowerCase()));
         if (matches.length === 1) {
           this.value = matches[0];
           localStorage.setItem('asortimanSelectedLocation', matches[0]);
-          renderTable();
+          render();
         } else {
-          tableBody.innerHTML = `<tr class="empty-row"><td colspan="5">Napišite više za precizniji odabir</td></tr>`;
+          cardsContainer.innerHTML = `<div class="empty-state">Napišite više za precizniji odabir</div>`;
+          tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">Napišite više za precizniji odabir</td></tr>`;
           itemCount.textContent = '0 artikala';
           updateAddressDisplay('');
         }
@@ -618,24 +689,24 @@
       const val = this.value.trim();
       if (locationSet.has(val)) {
         localStorage.setItem('asortimanSelectedLocation', val);
-        renderTable();
+        render();
       } else {
         const match = Array.from(locationSet).find(l => l.toLowerCase() === val.toLowerCase());
-        if (match) { this.value = match; localStorage.setItem('asortimanSelectedLocation', match); renderTable(); }
+        if (match) { this.value = match; localStorage.setItem('asortimanSelectedLocation', match); render(); }
         else {
           const partial = Array.from(locationSet).find(l => l.toLowerCase().includes(val.toLowerCase()));
-          if (partial) { this.value = partial; localStorage.setItem('asortimanSelectedLocation', partial); renderTable(); }
-          else renderTable();
+          if (partial) { this.value = partial; localStorage.setItem('asortimanSelectedLocation', partial); render(); }
+          else render();
         }
       }
     });
 
-    filterVrsta.addEventListener('change', () => { updatePodvrstaFilter(); renderTable(); });
-    filterPodvrsta.addEventListener('change', renderTable);
+    filterVrsta.addEventListener('change', () => { updatePodvrstaFilter(); render(); });
+    filterPodvrsta.addEventListener('change', render);
     resetBtn.addEventListener('click', () => {
       filterVrsta.value = ''; filterPodvrsta.value = '';
       updatePodvrstaFilter();
-      renderTable();
+      render();
     });
 
     // ---------- Init ----------
