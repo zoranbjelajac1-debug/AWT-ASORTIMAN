@@ -3,78 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>ASORTIMAN 2.0 – mobilni pregled</title>
+  <title>ASORTIMAN 2.0</title>
   <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkFTT1JUSU1BTiAyLjAiLAogICJzaG9ydF9uYW1lIjogIkFTT1JUSU1BTiIsCiAgImRlc2NyaXB0aW9uIjogIlByZWdsZWQgYXNvcnRpbWFuYSBwb2QgbG9rYWNpamFtYSIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZjRmNmZhIiwKICAidGhlbWVfY29sb3IiOiAiIzFmNWI4ZSIsCiAgIm9yaWVudGF0aW9uIjogInBvcnRyYWl0IiwKICAiaWNvbnMiOiBbCiAgICB7ICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLDxzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgNTEyIDUxMic+PHJlY3Qgd2lkdGg9JzUxMicgaGVpZ2h0PSc1MTInIHJ4PSc4MCcgZmlsbD0nIzFmNWI4ZScvPjx0ZXh0IHg9JzI1NicgeT0nMzQwJyBmb250LXNpemU9JzI4MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZmlsbD0nd2hpdGUnIGZvbnQtZmFtaWx5PSdzeXN0ZW0tc2Fucy1zZXJpZic+8J+MuDwvdGV4dD48L3N2Zz4iLCAic2l6ZXMiOiAiNTEyeDUxMiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiIH0KICBdCn0=">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     * { box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; }
-    body { background: #f4f6fa; padding: 16px 12px 40px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-    .app-container { max-width: 580px; width: 100%; background: white; border-radius: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.06); padding: 20px 16px 32px; }
-    h1 { font-size: 1.6rem; font-weight: 600; color: #0b2b4a; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-    h1 small { font-size: 0.9rem; font-weight: 400; color: #4a6f8e; margin-left: auto; }
-    .upload-area { background: #f0f4fe; border-radius: 60px; padding: 14px 18px; margin: 16px 0 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; border: 1px dashed #99badd; }
-    .upload-area label { background: #1f5b8e; color: white; padding: 8px 20px; border-radius: 40px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 6px; }
-    .upload-area label:active { background: #12406a; }
-    .upload-area input[type="file"] { display: none; }
-    .file-status { font-size: 0.85rem; color: #1d4d7a; background: white; padding: 4px 14px; border-radius: 30px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); flex: 1; min-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .location-section { background: #eef3f9; border-radius: 20px; padding: 18px 14px 14px; margin: 10px 0 16px; }
-    .loc-selector { margin-bottom: 12px; position: relative; }
-    .loc-selector label { font-weight: 500; font-size: 0.9rem; color: #1d3b5a; display: block; margin-bottom: 4px; }
-    .loc-selector input { width: 100%; padding: 12px 14px; border-radius: 40px; border: 1px solid #cbd8e6; background: white; font-size: 1rem; color: #0b2b4a; font-weight: 500; box-shadow: 0 1px 4px rgba(0,0,0,0.02); outline: none; }
-    .loc-selector input:focus { border-color: #2d7bb6; box-shadow: 0 0 0 3px rgba(45, 123, 182, 0.15); }
-    .address-box { background: white; border-radius: 18px; padding: 12px 16px; margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px 18px; border-left: 4px solid #2d7bb6; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
-    .address-box span { font-size: 0.95rem; color: #1f3a54; }
-    .address-box .label { color: #5b7c9a; font-weight: 400; margin-right: 3px; }
-    .filter-bar { display: flex; flex-wrap: wrap; gap: 10px 12px; background: #f9fcff; padding: 14px 12px 10px; border-radius: 24px; margin: 18px 0 10px; align-items: flex-end; border: 1px solid #e2ebf5; }
-    .filter-group { flex: 1 0 120px; min-width: 110px; }
-    .filter-group label { display: block; font-size: 0.7rem; font-weight: 600; color: #31638b; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
-    .filter-group select { width: 100%; padding: 10px 8px; border-radius: 30px; border: 1px solid #d5e0ec; background: white; font-size: 0.9rem; color: #0f2b44; }
-    .reset-filters { background: #e6edf6; border: none; border-radius: 40px; padding: 8px 18px; font-size: 0.8rem; font-weight: 500; color: #1a4f77; cursor: pointer; transition: 0.1s; margin-left: auto; align-self: center; height: 42px; white-space: nowrap; }
+    body { background: #f4f6fa; padding: 8px 8px 24px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    .app-container { max-width: 580px; width: 100%; background: white; border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); padding: 12px 12px 18px; }
+    h1 { font-size: 1.2rem; font-weight: 600; color: #0b2b4a; display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
+    h1 small { font-size: 0.65rem; font-weight: 400; color: #4a6f8e; margin-left: auto; }
+    
+    /* SAŽETI IMPORT - još manji */
+    .import-tools { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 4px; align-items: center; }
+    .import-tools .file-label { background: #1f5b8e; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 500; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 3px; }
+    .import-tools .file-label:active { background: #12406a; }
+    .import-tools input[type="file"] { display: none; }
+    .import-tools .gh-input { flex: 1; min-width: 80px; padding: 3px 8px; border-radius: 20px; border: 1px solid #d5e0ec; background: white; font-size: 0.6rem; outline: none; height: 24px; }
+    .import-tools .gh-input:focus { border-color: #2d7bb6; }
+    .import-tools .gh-btn { background: #2d7bb6; color: white; border: none; border-radius: 20px; padding: 3px 12px; font-size: 0.6rem; cursor: pointer; height: 24px; white-space: nowrap; }
+    .import-tools .gh-btn:active { background: #1f5b8e; }
+    .import-tools .action-btn { background: #e6edf6; border: none; border-radius: 20px; padding: 3px 10px; font-size: 0.6rem; color: #1a4f77; cursor: pointer; height: 24px; white-space: nowrap; }
+    .import-tools .action-btn:active { background: #cddcee; }
+    .import-tools .clear-btn { background: #fee8e8; border: none; border-radius: 20px; padding: 3px 10px; font-size: 0.6rem; color: #b13a3a; cursor: pointer; height: 24px; }
+    .import-tools .clear-btn:active { background: #fdd5d5; }
+    .import-tools .file-status { font-size: 0.55rem; color: #4a6f8e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; }
+    .import-status { font-size: 0.55rem; color: #4a6f8e; width: 100%; margin-top: 1px; }
+    .import-status.loading { color: #2d7bb6; }
+    .import-status.success { color: #4caf50; }
+    .import-status.error { color: #d32f2f; }
+    
+    .status-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.55rem; color: #4a6f8e; padding: 1px 0; }
+    .status-bar .saved-indicator { display: flex; align-items: center; gap: 3px; }
+    .status-bar .saved-indicator .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #4caf50; }
+    .status-bar .saved-indicator .dot.gray { background: #b0b0b0; }
+    
+    /* LOKACIJA - sažetija */
+    .location-section { background: #eef3f9; border-radius: 12px; padding: 6px 10px 6px; margin: 4px 0 6px; }
+    .loc-selector input { width: 100%; padding: 5px 10px; border-radius: 20px; border: 1px solid #cbd8e6; background: white; font-size: 0.75rem; color: #0b2b4a; font-weight: 500; outline: none; }
+    .loc-selector input:focus { border-color: #2d7bb6; box-shadow: 0 0 0 2px rgba(45, 123, 182, 0.1); }
+    .address-box { background: white; border-radius: 8px; padding: 3px 10px; margin-top: 3px; display: flex; flex-wrap: wrap; gap: 2px 12px; border-left: 2px solid #2d7bb6; font-size: 0.65rem; color: #1f3a54; }
+    .address-box .label { color: #5b7c9a; margin-right: 1px; font-size: 0.55rem; }
+    
+    /* FILTERI - sažetiji */
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 4px 6px; background: #f9fcff; padding: 4px 8px 4px; border-radius: 12px; margin: 4px 0 6px; align-items: center; border: 1px solid #e2ebf5; }
+    .filter-group { flex: 1 0 60px; min-width: 50px; }
+    .filter-group label { display: block; font-size: 0.5rem; font-weight: 600; color: #31638b; text-transform: uppercase; letter-spacing: 0.2px; margin-bottom: 1px; }
+    .filter-group select { width: 100%; padding: 4px 4px; border-radius: 14px; border: 1px solid #d5e0ec; background: white; font-size: 0.65rem; color: #0f2b44; }
+    .reset-filters { background: #e6edf6; border: none; border-radius: 20px; padding: 3px 12px; font-size: 0.6rem; font-weight: 500; color: #1a4f77; cursor: pointer; height: 26px; white-space: nowrap; margin-left: auto; }
     .reset-filters:active { background: #cddcee; }
     
-    /* CARD LAYOUT umjesto tablice */
-    .cards-wrapper { margin-top: 12px; border-radius: 20px; background: white; border: 1px solid #e9eff6; box-shadow: 0 2px 8px rgba(0,0,0,0.02); max-height: 60vh; overflow-y: auto; padding: 12px; }
-    .item-card { background: #f8faff; border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; border-left: 4px solid #2d7bb6; box-shadow: 0 1px 4px rgba(0,0,0,0.04); transition: 0.1s; }
-    .item-card:last-child { margin-bottom: 0; }
-    .item-card .card-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #edf2f9; }
-    .item-card .card-row:last-child { border-bottom: none; }
-    .item-card .card-label { font-size: 0.7rem; font-weight: 600; color: #5b7c9a; text-transform: uppercase; letter-spacing: 0.3px; min-width: 70px; }
-    .item-card .card-value { font-size: 0.9rem; color: #1a3b58; text-align: right; word-break: break-word; flex: 1; margin-left: 10px; }
-    .item-card .card-value.sifra { font-weight: 600; color: #0b2b4a; }
-    .item-card .badge-vrsta { background: #dfe9f5; padding: 2px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 500; color: #1a4b74; display: inline-block; }
-    .item-card .badge-podvrsta { background: #eef3fa; padding: 2px 12px; border-radius: 30px; font-size: 0.72rem; color: #2d5580; display: inline-block; }
-    .item-card .card-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; margin-top: 2px; }
-    .empty-state { text-align: center; color: #798da3; padding: 28px 8px; font-style: italic; }
-    
-    .footer-note { margin-top: 20px; font-size: 0.75rem; color: #6b85a0; text-align: center; border-top: 1px solid #dde6f0; padding-top: 18px; }
-    .import-btn { background: #eef3f9; border: none; border-radius: 40px; padding: 12px 20px; font-weight: 500; color: #1f5b8e; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.1s; width: 100%; justify-content: center; margin-top: 8px; }
-    .import-btn:active { background: #dce6f2; }
-    input[list]::-webkit-calendar-picker-indicator { opacity: 0.6; padding: 4px; }
-    .clear-data-btn { background: #fee8e8; border: none; border-radius: 40px; padding: 8px 16px; font-size: 0.75rem; font-weight: 500; color: #b13a3a; cursor: pointer; transition: 0.1s; margin-left: 8px; }
-    .clear-data-btn:active { background: #fdd5d5; }
-    .status-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.75rem; color: #4a6f8e; flex-wrap: wrap; gap: 6px; }
-    .status-bar .saved-indicator { display: flex; align-items: center; gap: 4px; }
-    .status-bar .saved-indicator .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #4caf50; }
-    .status-bar .saved-indicator .dot.gray { background: #b0b0b0; }
-    .backup-restore { display: flex; gap: 10px; margin: 12px 0 6px; flex-wrap: wrap; }
-    .backup-restore button { background: #e6edf6; border: none; border-radius: 40px; padding: 6px 16px; font-size: 0.75rem; color: #1a4f77; cursor: pointer; }
-    .backup-restore input[type="file"] { display: none; }
-    .github-import { background: #f0f4fe; border-radius: 20px; padding: 12px 16px; margin: 10px 0 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; border: 1px solid #d5e0ec; }
-    .github-import input { flex: 1; min-width: 150px; padding: 10px 14px; border-radius: 40px; border: 1px solid #cbd8e6; background: white; font-size: 0.85rem; outline: none; }
-    .github-import input:focus { border-color: #2d7bb6; }
-    .github-import button { background: #2d7bb6; color: white; border: none; border-radius: 40px; padding: 10px 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap; }
-    .github-import button:active { background: #1f5b8e; }
-    .github-import .status { font-size: 0.75rem; color: #4a6f8e; width: 100%; }
-    .github-import .status.loading { color: #2d7bb6; }
-    .github-import .status.success { color: #4caf50; }
-    .github-import .status.error { color: #d32f2f; }
-    .view-toggle { display: flex; gap: 8px; margin: 8px 0; justify-content: flex-end; }
-    .view-toggle button { background: #eef3f9; border: none; border-radius: 30px; padding: 6px 14px; font-size: 0.75rem; color: #1a4f77; cursor: pointer; }
+    .view-toggle { display: flex; gap: 4px; margin: 3px 0 4px; justify-content: flex-end; }
+    .view-toggle button { background: #eef3f9; border: none; border-radius: 16px; padding: 2px 10px; font-size: 0.55rem; color: #1a4f77; cursor: pointer; }
     .view-toggle button.active { background: #1f5b8e; color: white; }
-    .view-toggle button:active { transform: scale(0.95); }
+    
+    /* KARTICE - još manje */
+    .cards-wrapper { border-radius: 12px; background: white; border: 1px solid #e9eff6; max-height: 52vh; overflow-y: auto; padding: 5px; }
+    .item-card { background: #f8faff; border-radius: 8px; padding: 5px 10px; margin-bottom: 4px; border-left: 2px solid #2d7bb6; box-shadow: 0 1px 2px rgba(0,0,0,0.02); display: grid; grid-template-columns: auto 1fr; gap: 0 8px; font-size: 0.65rem; }
+    .item-card:last-child { margin-bottom: 0; }
+    .item-card .card-label { font-size: 0.5rem; font-weight: 600; color: #5b7c9a; text-transform: uppercase; letter-spacing: 0.2px; align-self: center; }
+    .item-card .card-value { color: #1a3b58; word-break: break-word; align-self: center; }
+    .item-card .card-value.sifra { font-weight: 600; color: #0b2b4a; }
+    .item-card .card-tags { display: flex; gap: 3px; flex-wrap: wrap; }
+    .item-card .badge-vrsta { background: #dfe9f5; padding: 1px 8px; border-radius: 14px; font-size: 0.55rem; font-weight: 500; color: #1a4b74; }
+    .item-card .badge-podvrsta { background: #eef3fa; padding: 1px 8px; border-radius: 14px; font-size: 0.55rem; color: #2d5580; }
+    
+    /* TABLICA - manja */
+    .table-wrapper { border-radius: 12px; overflow-x: auto; background: white; border: 1px solid #e9eff6; max-height: 52vh; overflow-y: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.6rem; min-width: 280px; table-layout: fixed; }
+    th { background: #eef4fb; color: #1a3b58; font-weight: 600; padding: 4px 6px; text-align: left; border-bottom: 1.5px solid #d0ddee; position: sticky; top: 0; z-index: 2; font-size: 0.55rem; }
+    td { padding: 4px 6px; border-bottom: 1px solid #e5ecf5; color: #1f3852; font-size: 0.6rem; }
+    tr:last-child td { border-bottom: none; }
+    th:nth-child(1), td:nth-child(1) { width: 12%; }
+    th:nth-child(2), td:nth-child(2) { width: 30%; }
+    th:nth-child(3), td:nth-child(3) { width: 18%; }
+    th:nth-child(4), td:nth-child(4) { width: 20%; }
+    th:nth-child(5), td:nth-child(5) { width: 20%; }
+    
+    .empty-state { text-align: center; color: #798da3; padding: 16px 6px; font-style: italic; font-size: 0.7rem; }
+    .footer-note { margin-top: 8px; font-size: 0.5rem; color: #6b85a0; text-align: center; border-top: 1px solid #dde6f0; padding-top: 8px; }
+    .item-count { display: flex; justify-content: flex-end; font-size: 0.6rem; color: #3f6182; margin-top: 3px; }
+    
     @media (max-width: 480px) {
-      .item-card .card-row { flex-wrap: wrap; gap: 2px; }
-      .item-card .card-value { text-align: left; margin-left: 0; width: 100%; }
+      .item-card { font-size: 0.6rem; padding: 4px 8px; grid-template-columns: auto 1fr; gap: 0 6px; }
+      .import-tools .gh-input { min-width: 50px; font-size: 0.55rem; }
+      .filter-group { flex: 1 0 45px; min-width: 40px; }
+      table { font-size: 0.55rem; min-width: 240px; }
+      .address-box { font-size: 0.6rem; }
     }
   </style>
 </head>
@@ -82,74 +96,65 @@
 <div class="app-container" id="app">
   <h1>🧳 Asortiman <small>2.0</small></h1>
 
-  <div class="upload-area">
-    <label for="fileInput">📂 Uvezi Excel</label>
+  <!-- SAŽETI IMPORT -->
+  <div class="import-tools">
+    <label class="file-label" for="fileInput">📂 Excel</label>
     <input type="file" id="fileInput" accept=".xlsx,.xls">
-    <span class="file-status" id="fileStatus">nema datoteke</span>
-    <button class="clear-data-btn" id="clearDataBtn">🗑️ Obriši</button>
-  </div>
-
-  <!-- GitHub Import -->
-  <div class="github-import">
-    <input type="text" id="githubUrl" placeholder="GitHub URL Excel datoteke" value="https://raw.githubusercontent.com/korisnik/repo/main/ASORTIMAN.xlsx">
-    <button id="githubImportBtn">📥 Uvezi s GitHub-a</button>
-    <span class="status" id="githubStatus">Unesite URL i kliknite za uvoz</span>
+    <input type="text" class="gh-input" id="githubUrl" placeholder="Git URL" value="https://raw.githubusercontent.com/korisnik/repo/main/ASORTIMAN.xlsx">
+    <button class="gh-btn" id="githubImportBtn">⬇️ Git</button>
+    <button class="action-btn" id="backupBtn">💾</button>
+    <button class="action-btn" id="restoreBtn">📂</button>
+    <input type="file" id="restoreInput" accept=".json">
+    <button class="clear-btn" id="clearDataBtn">🗑️</button>
+    <span class="file-status" id="fileStatus">-</span>
+    <span class="import-status" id="githubStatus"></span>
   </div>
 
   <div class="status-bar">
-    <span id="dataInfo">Nema uvezenih podataka</span>
-    <span class="saved-indicator"><span class="dot gray" id="saveDot"></span><span id="saveStatus">nije spremljeno</span></span>
+    <span id="dataInfo">Nema podataka</span>
+    <span class="saved-indicator"><span class="dot gray" id="saveDot"></span><span id="saveStatus">nije</span></span>
   </div>
 
-  <div class="backup-restore">
-    <button id="backupBtn">💾 Backup (JSON)</button>
-    <button id="restoreBtn">📂 Restore (JSON)</button>
-    <input type="file" id="restoreInput" accept=".json">
-  </div>
-
+  <!-- LOKACIJA - SAŽETIJA -->
   <div class="location-section">
     <div class="loc-selector">
-      <label for="locationInput">📍 Odaberi lokaciju (piši za pretragu)</label>
-      <input type="text" id="locationInput" placeholder="npr. STUDENAC 191 ili PIROVAC" list="locationList" autocomplete="off">
+      <input type="text" id="locationInput" placeholder="🔍 Lokacija" list="locationList" autocomplete="off">
       <datalist id="locationList"></datalist>
     </div>
     <div class="address-box" id="addressBox">
-      <span><span class="label">Adresa:</span> <span id="addrDisplay">-</span></span>
+      <span><span class="label">Adr:</span> <span id="addrDisplay">-</span></span>
       <span><span class="label">Grad:</span> <span id="cityDisplay">-</span></span>
     </div>
   </div>
 
+  <!-- FILTERI - SAŽETIJI -->
   <div class="filter-bar">
-    <div class="filter-group"><label for="filterVrsta">VRSTA</label><select id="filterVrsta"><option value="">Sve vrste</option></select></div>
-    <div class="filter-group"><label for="filterPodvrsta">PODVRSTA</label><select id="filterPodvrsta"><option value="">Sve podvrste</option></select></div>
-    <button class="reset-filters" id="resetFiltersBtn">✕ Poništi filtere</button>
+    <div class="filter-group"><label>Vrsta</label><select id="filterVrsta"><option value="">Sve</option></select></div>
+    <div class="filter-group"><label>Podvrsta</label><select id="filterPodvrsta"><option value="">Sve</option></select></div>
+    <button class="reset-filters" id="resetFiltersBtn">✕</button>
   </div>
 
-  <!-- View Toggle -->
+  <!-- VIEW TOGGLE -->
   <div class="view-toggle">
     <button id="viewCards" class="active">📇 Kartice</button>
     <button id="viewTable">📋 Tablica</button>
   </div>
 
-  <!-- Cards View -->
+  <!-- KARTICE -->
   <div class="cards-wrapper" id="cardsContainer">
-    <div class="empty-state">Uvezite Excel datoteku za prikaz</div>
+    <div class="empty-state">Uvezite Excel datoteku</div>
   </div>
 
-  <!-- Table View (skriven po defaultu) -->
+  <!-- TABLICA (skrivena) -->
   <div class="table-wrapper" id="tableContainer" style="display:none;">
     <table>
-      <thead><tr><th>AWT ŠIFRA</th><th>ARTIKL</th><th>EAN</th><th>VRSTA</th><th>PODVRSTA</th></tr></thead>
+      <thead><tr><th>Šifra</th><th>Artikl</th><th>EAN</th><th>Vrsta</th><th>Podvrsta</th></tr></thead>
       <tbody id="tableBody"><tr><td colspan="5" class="empty-state">Uvezite Excel datoteku</td></tr></tbody>
     </table>
   </div>
   
-  <div style="margin-top: 8px; display: flex; justify-content: flex-end; font-size: 0.8rem; color: #3f6182;">
-    <span id="itemCount">0 artikala</span>
-  </div>
-
-  <button class="import-btn" id="importBtn">📤 Uvezi ASORTIMAN iz Excela</button>
-  <div class="footer-note">Podaci se trajno spremaju u IndexedDB. Filtriraj po VRSTI i PODVRSTI.</div>
+  <div class="item-count"><span id="itemCount">0 artikala</span></div>
+  <div class="footer-note">IndexedDB • offline • backup/restore JSON</div>
 </div>
 
 <script>
@@ -181,13 +186,8 @@
       const tx = db.transaction(STORE_NAME, 'readwrite');
       const store = tx.objectStore(STORE_NAME);
       await store.clear();
-      for (const item of dataArray) {
-        store.add(item);
-      }
-      return new Promise((resolve, reject) => {
-        tx.oncomplete = resolve;
-        tx.onerror = (e) => reject(e.target.error);
-      });
+      for (const item of dataArray) store.add(item);
+      return new Promise((resolve, reject) => { tx.oncomplete = resolve; tx.onerror = (e) => reject(e.target.error); });
     }
 
     async function loadAllData() {
@@ -206,20 +206,12 @@
       const tx = db.transaction(STORE_NAME, 'readwrite');
       const store = tx.objectStore(STORE_NAME);
       store.clear();
-      return new Promise((resolve, reject) => {
-        tx.oncomplete = resolve;
-        tx.onerror = (e) => reject(e.target.error);
-      });
+      return new Promise((resolve, reject) => { tx.oncomplete = resolve; tx.onerror = (e) => reject(e.target.error); });
     }
 
-    // ---------- Global state ----------
-    let fullData = [];
-    let locationSet = new Set();
-    let locationMap = new Map();
-    let currentLocation = '';
-    let currentView = 'cards'; // 'cards' ili 'table'
+    // ---------- Global ----------
+    let fullData = [], locationSet = new Set(), locationMap = new Map(), currentView = 'cards';
 
-    // DOM refs
     const locationInput = document.getElementById('locationInput');
     const locationListEl = document.getElementById('locationList');
     const addrDisplay = document.getElementById('addrDisplay');
@@ -233,7 +225,6 @@
     const fileInput = document.getElementById('fileInput');
     const fileStatus = document.getElementById('fileStatus');
     const itemCount = document.getElementById('itemCount');
-    const importBtn = document.getElementById('importBtn');
     const clearDataBtn = document.getElementById('clearDataBtn');
     const dataInfo = document.getElementById('dataInfo');
     const saveDot = document.getElementById('saveDot');
@@ -251,11 +242,11 @@
 
     function updateSaveStatus(saved) {
       saveDot.className = 'dot' + (saved ? '' : ' gray');
-      saveStatus.textContent = saved ? 'spremljeno' : 'nije spremljeno';
+      saveStatus.textContent = saved ? 'spremljeno' : 'nije';
     }
 
     function updateDataInfo() {
-      dataInfo.textContent = fullData.length ? `${fullData.length} artikala, ${locationSet.size} lokacija` : 'Nema uvezenih podataka';
+      dataInfo.textContent = fullData.length ? `${fullData.length} art, ${locationSet.size} lok` : 'Nema podataka';
     }
 
     function updateLocationDatalist() {
@@ -277,7 +268,7 @@
         if (row.podvrsta) podvrstaSet.add(row.podvrsta);
       }
       const currentVrsta = filterVrsta.value;
-      filterVrsta.innerHTML = '<option value="">Sve vrste</option>';
+      filterVrsta.innerHTML = '<option value="">Sve</option>';
       Array.from(vrstaSet).sort((a,b) => a.localeCompare(b, 'hr')).forEach(v => {
         const opt = document.createElement('option'); opt.value = v; opt.textContent = v; filterVrsta.appendChild(opt);
       });
@@ -285,7 +276,7 @@
       else filterVrsta.value = '';
 
       const currentPod = filterPodvrsta.value;
-      filterPodvrsta.innerHTML = '<option value="">Sve podvrste</option>';
+      filterPodvrsta.innerHTML = '<option value="">Sve</option>';
       Array.from(podvrstaSet).sort((a,b) => a.localeCompare(b, 'hr')).forEach(p => {
         const opt = document.createElement('option'); opt.value = p; opt.textContent = p; filterPodvrsta.appendChild(opt);
       });
@@ -302,7 +293,7 @@
         }
       }
       const currentPod = filterPodvrsta.value;
-      filterPodvrsta.innerHTML = '<option value="">Sve podvrste</option>';
+      filterPodvrsta.innerHTML = '<option value="">Sve</option>';
       Array.from(podvrstaSet).sort((a,b) => a.localeCompare(b, 'hr')).forEach(p => {
         const opt = document.createElement('option'); opt.value = p; opt.textContent = p; filterPodvrsta.appendChild(opt);
       });
@@ -310,70 +301,20 @@
       else filterPodvrsta.value = '';
     }
 
-    // ---------- RENDER: Cards ----------
-    function renderCards(data) {
-      if (!data || !data.length) {
-        cardsContainer.innerHTML = `<div class="empty-state">${fullData.length === 0 ? 'Uvezite Excel datoteku' : 'Nema artikala za odabrane filtere'}</div>`;
-        return;
-      }
-      cardsContainer.innerHTML = data.map(row => `
-        <div class="item-card">
-          <div class="card-row">
-            <span class="card-label">AWT Šifra</span>
-            <span class="card-value sifra">${row.awtSifra || '-'}</span>
-          </div>
-          <div class="card-row">
-            <span class="card-label">Artikl</span>
-            <span class="card-value">${row.artikl || '-'}</span>
-          </div>
-          <div class="card-row">
-            <span class="card-label">EAN</span>
-            <span class="card-value">${row.ean || '-'}</span>
-          </div>
-          <div class="card-row" style="border-bottom: none;">
-            <span class="card-label">Kategorija</span>
-            <span class="card-value">
-              <div class="card-tags">
-                ${row.vrsta ? `<span class="badge-vrsta">${row.vrsta}</span>` : ''}
-                ${row.podvrsta ? `<span class="badge-podvrsta">${row.podvrsta}</span>` : ''}
-              </div>
-            </span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // ---------- RENDER: Table ----------
-    function renderTable(data) {
-      if (!data || !data.length) {
-        tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">${fullData.length === 0 ? 'Uvezite Excel datoteku' : 'Nema artikala za odabrane filtere'}</td></tr>`;
-        return;
-      }
-      tableBody.innerHTML = data.map(row => `<tr>
-        <td><strong>${row.awtSifra || ''}</strong></td>
-        <td>${row.artikl || ''}</td>
-        <td>${row.ean || ''}</td>
-        <td><span class="badge-vrsta">${row.vrsta || ''}</span></td>
-        <td><span class="badge-podvrsta">${row.podvrsta || ''}</span></td>
-      </tr>`).join('');
-    }
-
-    // ---------- Glavni render ----------
+    // ---------- RENDER ----------
     function render() {
       let loc = locationInput.value.trim();
       if (loc && !locationSet.has(loc)) {
         const match = Array.from(locationSet).find(l => l.toLowerCase().includes(loc.toLowerCase()));
-        if (match) { loc = match; locationInput.value = match; }
-        else loc = '';
+        if (match) { loc = match; locationInput.value = match; } else loc = '';
       } else if (!loc || !locationSet.has(loc)) loc = '';
 
-      currentLocation = loc;
       updateAddressDisplay(loc);
 
       if (!loc || fullData.length === 0) {
-        const emptyMsg = fullData.length === 0 ? 'Uvezite Excel datoteku' : 'Odaberite lokaciju';
-        cardsContainer.innerHTML = `<div class="empty-state">${emptyMsg}</div>`;
-        tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">${emptyMsg}</td></tr>`;
+        const msg = fullData.length === 0 ? 'Uvezite Excel datoteku' : 'Odaberite lokaciju';
+        cardsContainer.innerHTML = `<div class="empty-state">${msg}</div>`;
+        tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">${msg}</td></tr>`;
         itemCount.textContent = '0 artikala';
         return;
       }
@@ -391,34 +332,50 @@
       if (currentView === 'cards') {
         cardsContainer.style.display = 'block';
         tableContainer.style.display = 'none';
-        renderCards(filtered);
+        if (!filtered.length) {
+          cardsContainer.innerHTML = `<div class="empty-state">Nema artikala za ovaj filter</div>`;
+        } else {
+          cardsContainer.innerHTML = filtered.map(row => `
+            <div class="item-card">
+              <span class="card-label">Šifra</span><span class="card-value sifra">${row.awtSifra || '-'}</span>
+              <span class="card-label">Artikl</span><span class="card-value">${row.artikl || '-'}</span>
+              <span class="card-label">EAN</span><span class="card-value">${row.ean || '-'}</span>
+              <span class="card-label">Kat.</span>
+              <span class="card-value">
+                <span class="card-tags">
+                  ${row.vrsta ? `<span class="badge-vrsta">${row.vrsta}</span>` : ''}
+                  ${row.podvrsta ? `<span class="badge-podvrsta">${row.podvrsta}</span>` : ''}
+                </span>
+              </span>
+            </div>
+          `).join('');
+        }
       } else {
         cardsContainer.style.display = 'none';
         tableContainer.style.display = 'block';
-        renderTable(filtered);
+        if (!filtered.length) {
+          tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">Nema artikala za ovaj filter</td></tr>`;
+        } else {
+          tableBody.innerHTML = filtered.map(row => `<tr>
+            <td><strong>${row.awtSifra || ''}</strong></td>
+            <td>${row.artikl || ''}</td>
+            <td>${row.ean || ''}</td>
+            <td><span class="badge-vrsta">${row.vrsta || ''}</span></td>
+            <td><span class="badge-podvrsta">${row.podvrsta || ''}</span></td>
+          </tr>`).join('');
+        }
       }
     }
 
     // ---------- View toggle ----------
-    viewCardsBtn.addEventListener('click', () => {
-      currentView = 'cards';
-      viewCardsBtn.className = 'active';
-      viewTableBtn.className = '';
-      render();
-    });
+    viewCardsBtn.addEventListener('click', () => { currentView = 'cards'; viewCardsBtn.className = 'active'; viewTableBtn.className = ''; render(); });
+    viewTableBtn.addEventListener('click', () => { currentView = 'table'; viewTableBtn.className = 'active'; viewCardsBtn.className = ''; render(); });
 
-    viewTableBtn.addEventListener('click', () => {
-      currentView = 'table';
-      viewTableBtn.className = 'active';
-      viewCardsBtn.className = '';
-      render();
-    });
-
-    // ---------- Process Excel Data ----------
+    // ---------- Process Excel ----------
     async function processExcelData(workbook, sourceName = '') {
       const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
       const json = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
-      if (!json || !json.length) { alert('Excel datoteka je prazna ili neispravna.'); return false; }
+      if (!json || !json.length) { alert('Excel datoteka je prazna.'); return false; }
 
       const headers = Object.keys(json[0]);
       const findKey = (patterns) => {
@@ -439,7 +396,7 @@
       const keyPodvrsta = findKey(['PODVRSTA']);
 
       if (!keyLokacija || !keyAdresa || !keyGrad || !keyAwtSifra || !keyArtikl || !keyEAN) {
-        alert('Neki očekivani stupci nisu pronađeni. Provjerite header: LOKACIJA, ADRESA, GRAD, AWT ŠIFRA, ARTIKL, EAN, VRSTA, PODVRSTA');
+        alert('Nedostaju stupci: LOKACIJA, ADRESA, GRAD, AWT ŠIFRA, ARTIKL, EAN');
         return false;
       }
 
@@ -469,7 +426,7 @@
         }
       }
 
-      if (!newData.length) { alert('Nema valjanih podataka za uvoz.'); return false; }
+      if (!newData.length) { alert('Nema valjanih podataka.'); return false; }
 
       fullData = newData;
       locationSet = locSet;
@@ -480,7 +437,7 @@
       updateLocationDatalist();
       populateFilters();
       updateDataInfo();
-      fileStatus.textContent = sourceName ? `✅ ${fullData.length} redova (${sourceName})` : `✅ ${fullData.length} redova`;
+      fileStatus.textContent = sourceName ? `✅ ${fullData.length}` : `✅ ${fullData.length}`;
 
       const savedLoc = localStorage.getItem('asortimanSelectedLocation');
       if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
@@ -492,24 +449,20 @@
 
     // ---------- GitHub Import ----------
     async function importFromGitHub(url) {
-      githubStatus.textContent = '⏳ Preuzimanje datoteke...';
-      githubStatus.className = 'status loading';
-      
+      githubStatus.textContent = '⏳ Preuzimanje...';
+      githubStatus.className = 'import-status loading';
       try {
         let finalUrl = url;
         if (url.includes('github.com') && !url.includes('raw.githubusercontent.com')) {
           finalUrl = url.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
         }
-        
         const response = await fetch(finalUrl);
-        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         
         const contentType = response.headers.get('content-type') || '';
-        let data;
-        
         if (contentType.includes('json') || url.endsWith('.json')) {
           const jsonData = await response.json();
-          if (!Array.isArray(jsonData)) throw new Error('JSON nije niz podataka');
+          if (!Array.isArray(jsonData)) throw new Error('JSON nije niz');
           fullData = jsonData;
           locationSet = new Set();
           locationMap = new Map();
@@ -522,30 +475,29 @@
           populateFilters();
           updateDataInfo();
           updateSaveStatus(true);
-          fileStatus.textContent = `✅ ${fullData.length} redova (GitHub JSON)`;
+          fileStatus.textContent = `✅ ${fullData.length} (JSON)`;
           const savedLoc = localStorage.getItem('asortimanSelectedLocation');
           if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
           else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
           render();
-          githubStatus.textContent = `✅ Uspješno uvezeno ${fullData.length} artikala`;
-          githubStatus.className = 'status success';
+          githubStatus.textContent = `✅ ${fullData.length} artikala`;
+          githubStatus.className = 'import-status success';
           return;
         }
         
         const arrayBuffer = await response.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-        const success = await processExcelData(workbook, 'GitHub');
+        const success = await processExcelData(workbook, 'Git');
         if (success) {
-          githubStatus.textContent = `✅ Uspješno uvezeno ${fullData.length} artikala`;
-          githubStatus.className = 'status success';
+          githubStatus.textContent = `✅ ${fullData.length} artikala`;
+          githubStatus.className = 'import-status success';
         } else {
-          githubStatus.textContent = '❌ Greška pri obradi Excel datoteke';
-          githubStatus.className = 'status error';
+          githubStatus.textContent = '❌ Greška pri obradi';
+          githubStatus.className = 'import-status error';
         }
       } catch (error) {
-        console.error('GitHub import error:', error);
-        githubStatus.textContent = `❌ Greška: ${error.message}`;
-        githubStatus.className = 'status error';
+        githubStatus.textContent = `❌ ${error.message}`;
+        githubStatus.className = 'import-status error';
       }
     }
 
@@ -565,23 +517,45 @@
         populateFilters();
         updateDataInfo();
         updateSaveStatus(true);
-        fileStatus.textContent = `📂 ${fullData.length} redova (DB)`;
+        fileStatus.textContent = `📂 ${fullData.length}`;
         const savedLoc = localStorage.getItem('asortimanSelectedLocation');
         if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
         else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
         render();
         return true;
-      } catch(e) { console.warn('DB load error', e); return false; }
+      } catch(e) { return false; }
     }
 
-    // ---------- Backup / Restore ----------
+    // ---------- Events ----------
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = async function(ev) {
+        try {
+          const data = new Uint8Array(ev.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          await processExcelData(workbook, file.name);
+          fileStatus.textContent = `📄 ${file.name}`;
+        } catch(err) { alert('Greška: ' + err.message); }
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    githubImportBtn.addEventListener('click', () => {
+      const url = githubUrl.value.trim();
+      if (!url) { githubStatus.textContent = '⚠️ Unesite URL'; githubStatus.className = 'import-status error'; return; }
+      importFromGitHub(url);
+    });
+    githubUrl.addEventListener('keydown', (e) => { if (e.key === 'Enter') githubImportBtn.click(); });
+
     backupBtn.addEventListener('click', async () => {
       const data = await loadAllData();
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `asortiman_backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.download = `asortiman_${new Date().toISOString().slice(0,10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
     });
@@ -606,17 +580,16 @@
         populateFilters();
         updateDataInfo();
         updateSaveStatus(true);
-        fileStatus.textContent = `📂 ${fullData.length} redova (restore)`;
+        fileStatus.textContent = `📂 ${fullData.length} (restore)`;
         const savedLoc = localStorage.getItem('asortimanSelectedLocation');
         if (savedLoc && locationSet.has(savedLoc)) locationInput.value = savedLoc;
         else if (locationSet.size === 1) { locationInput.value = Array.from(locationSet)[0]; localStorage.setItem('asortimanSelectedLocation', locationInput.value); }
         render();
         alert('Restore uspješan!');
-      } catch(err) { alert('Greška pri restore: ' + err.message); }
+      } catch(err) { alert('Greška: ' + err.message); }
       restoreInput.value = '';
     });
 
-    // ---------- Clear ----------
     clearDataBtn.addEventListener('click', async () => {
       if (!fullData.length) return;
       if (!confirm('Obrisati sve podatke?')) return;
@@ -628,40 +601,8 @@
       populateFilters();
       updateDataInfo();
       updateSaveStatus(false);
-      fileStatus.textContent = 'nema datoteke';
+      fileStatus.textContent = '-';
       render();
-    });
-
-    // ---------- Events ----------
-    fileInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = async function(ev) {
-        try {
-          const data = new Uint8Array(ev.target.result);
-          const workbook = XLSX.read(data, { type: 'array' });
-          await processExcelData(workbook, file.name);
-          fileStatus.textContent = `📄 ${file.name}`;
-        } catch(err) { alert('Greška pri čitanju: ' + err.message); }
-      };
-      reader.readAsArrayBuffer(file);
-    });
-
-    importBtn.addEventListener('click', () => fileInput.click());
-
-    githubImportBtn.addEventListener('click', () => {
-      const url = githubUrl.value.trim();
-      if (!url) {
-        githubStatus.textContent = '⚠️ Molimo unesite URL';
-        githubStatus.className = 'status error';
-        return;
-      }
-      importFromGitHub(url);
-    });
-
-    githubUrl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') githubImportBtn.click();
     });
 
     locationInput.addEventListener('input', function() {
@@ -676,11 +617,6 @@
           this.value = matches[0];
           localStorage.setItem('asortimanSelectedLocation', matches[0]);
           render();
-        } else {
-          cardsContainer.innerHTML = `<div class="empty-state">Napišite više za precizniji odabir</div>`;
-          tableBody.innerHTML = `<tr><td colspan="5" class="empty-state">Napišite više za precizniji odabir</td></tr>`;
-          itemCount.textContent = '0 artikala';
-          updateAddressDisplay('');
         }
       }
     });
