@@ -13,7 +13,7 @@
     h1 { font-size: 1.2rem; font-weight: 600; color: #0b2b4a; display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
     h1 small { font-size: 0.65rem; font-weight: 400; color: #4a6f8e; margin-left: auto; }
     
-    /* SAŽETI IMPORT - još manji */
+    /* SAŽETI IMPORT */
     .import-tools { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 4px; align-items: center; }
     .import-tools .file-label { background: #1f5b8e; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 500; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 3px; }
     .import-tools .file-label:active { background: #12406a; }
@@ -37,14 +37,14 @@
     .status-bar .saved-indicator .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #4caf50; }
     .status-bar .saved-indicator .dot.gray { background: #b0b0b0; }
     
-    /* LOKACIJA - sažetija */
+    /* LOKACIJA */
     .location-section { background: #eef3f9; border-radius: 12px; padding: 6px 10px 6px; margin: 4px 0 6px; }
     .loc-selector input { width: 100%; padding: 5px 10px; border-radius: 20px; border: 1px solid #cbd8e6; background: white; font-size: 0.75rem; color: #0b2b4a; font-weight: 500; outline: none; }
     .loc-selector input:focus { border-color: #2d7bb6; box-shadow: 0 0 0 2px rgba(45, 123, 182, 0.1); }
     .address-box { background: white; border-radius: 8px; padding: 3px 10px; margin-top: 3px; display: flex; flex-wrap: wrap; gap: 2px 12px; border-left: 2px solid #2d7bb6; font-size: 0.65rem; color: #1f3a54; }
     .address-box .label { color: #5b7c9a; margin-right: 1px; font-size: 0.55rem; }
     
-    /* FILTERI - sažetiji */
+    /* FILTERI */
     .filter-bar { display: flex; flex-wrap: wrap; gap: 4px 6px; background: #f9fcff; padding: 4px 8px 4px; border-radius: 12px; margin: 4px 0 6px; align-items: center; border: 1px solid #e2ebf5; }
     .filter-group { flex: 1 0 60px; min-width: 50px; }
     .filter-group label { display: block; font-size: 0.5rem; font-weight: 600; color: #31638b; text-transform: uppercase; letter-spacing: 0.2px; margin-bottom: 1px; }
@@ -56,7 +56,7 @@
     .view-toggle button { background: #eef3f9; border: none; border-radius: 16px; padding: 2px 10px; font-size: 0.55rem; color: #1a4f77; cursor: pointer; }
     .view-toggle button.active { background: #1f5b8e; color: white; }
     
-    /* KARTICE - još manje */
+    /* KARTICE */
     .cards-wrapper { border-radius: 12px; background: white; border: 1px solid #e9eff6; max-height: 52vh; overflow-y: auto; padding: 5px; }
     .item-card { background: #f8faff; border-radius: 8px; padding: 5px 10px; margin-bottom: 4px; border-left: 2px solid #2d7bb6; box-shadow: 0 1px 2px rgba(0,0,0,0.02); display: grid; grid-template-columns: auto 1fr; gap: 0 8px; font-size: 0.65rem; }
     .item-card:last-child { margin-bottom: 0; }
@@ -67,17 +67,66 @@
     .item-card .badge-vrsta { background: #dfe9f5; padding: 1px 8px; border-radius: 14px; font-size: 0.55rem; font-weight: 500; color: #1a4b74; }
     .item-card .badge-podvrsta { background: #eef3fa; padding: 1px 8px; border-radius: 14px; font-size: 0.55rem; color: #2d5580; }
     
-    /* TABLICA - manja */
+    /* TABLICA - POPRAVLJENO PRELAMANJE TEKSTA */
     .table-wrapper { border-radius: 12px; overflow-x: auto; background: white; border: 1px solid #e9eff6; max-height: 52vh; overflow-y: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 0.6rem; min-width: 280px; table-layout: fixed; }
-    th { background: #eef4fb; color: #1a3b58; font-weight: 600; padding: 4px 6px; text-align: left; border-bottom: 1.5px solid #d0ddee; position: sticky; top: 0; z-index: 2; font-size: 0.55rem; }
-    td { padding: 4px 6px; border-bottom: 1px solid #e5ecf5; color: #1f3852; font-size: 0.6rem; }
+    th { 
+      background: #eef4fb; 
+      color: #1a3b58; 
+      font-weight: 600; 
+      padding: 4px 6px; 
+      text-align: left; 
+      border-bottom: 1.5px solid #d0ddee; 
+      position: sticky; 
+      top: 0; 
+      z-index: 2; 
+      font-size: 0.55rem;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+    }
+    td { 
+      padding: 4px 6px; 
+      border-bottom: 1px solid #e5ecf5; 
+      color: #1f3852; 
+      font-size: 0.6rem;
+      word-wrap: break-word;
+      word-break: break-word;
+      hyphens: auto;
+      line-height: 1.4;
+      vertical-align: top;
+    }
     tr:last-child td { border-bottom: none; }
-    th:nth-child(1), td:nth-child(1) { width: 12%; }
-    th:nth-child(2), td:nth-child(2) { width: 30%; }
-    th:nth-child(3), td:nth-child(3) { width: 18%; }
-    th:nth-child(4), td:nth-child(4) { width: 20%; }
-    th:nth-child(5), td:nth-child(5) { width: 20%; }
+    
+    /* Fiksne širine kolona - sve jednako raspoređeno */
+    th:nth-child(1), td:nth-child(1) { width: 14%; min-width: 40px; }
+    th:nth-child(2), td:nth-child(2) { width: 30%; min-width: 60px; }
+    th:nth-child(3), td:nth-child(3) { width: 18%; min-width: 50px; }
+    th:nth-child(4), td:nth-child(4) { width: 19%; min-width: 45px; }
+    th:nth-child(5), td:nth-child(5) { width: 19%; min-width: 45px; }
+    
+    /* Badge unutar tablice - prilagođeni */
+    .table-badge-vrsta { 
+      background: #dfe9f5; 
+      padding: 1px 6px; 
+      border-radius: 12px; 
+      font-size: 0.5rem; 
+      font-weight: 500; 
+      color: #1a4b74; 
+      display: inline-block;
+      word-break: break-word;
+      max-width: 100%;
+    }
+    .table-badge-podvrsta { 
+      background: #eef3fa; 
+      padding: 1px 6px; 
+      border-radius: 12px; 
+      font-size: 0.5rem; 
+      color: #2d5580; 
+      display: inline-block;
+      word-break: break-word;
+      max-width: 100%;
+    }
     
     .empty-state { text-align: center; color: #798da3; padding: 16px 6px; font-style: italic; font-size: 0.7rem; }
     .footer-note { margin-top: 8px; font-size: 0.5rem; color: #6b85a0; text-align: center; border-top: 1px solid #dde6f0; padding-top: 8px; }
@@ -87,8 +136,23 @@
       .item-card { font-size: 0.6rem; padding: 4px 8px; grid-template-columns: auto 1fr; gap: 0 6px; }
       .import-tools .gh-input { min-width: 50px; font-size: 0.55rem; }
       .filter-group { flex: 1 0 45px; min-width: 40px; }
-      table { font-size: 0.55rem; min-width: 240px; }
+      table { font-size: 0.5rem; min-width: 240px; }
+      th { font-size: 0.5rem; padding: 3px 4px; }
+      td { font-size: 0.5rem; padding: 3px 4px; }
       .address-box { font-size: 0.6rem; }
+      /* Još manje širine za male ekrane */
+      th:nth-child(1), td:nth-child(1) { width: 12%; min-width: 30px; }
+      th:nth-child(2), td:nth-child(2) { width: 32%; min-width: 50px; }
+      th:nth-child(3), td:nth-child(3) { width: 16%; min-width: 40px; }
+      th:nth-child(4), td:nth-child(4) { width: 20%; min-width: 35px; }
+      th:nth-child(5), td:nth-child(5) { width: 20%; min-width: 35px; }
+      .table-badge-vrsta, .table-badge-podvrsta { font-size: 0.45rem; padding: 1px 4px; }
+    }
+    
+    @media (max-width: 380px) {
+      table { font-size: 0.45rem; min-width: 200px; }
+      th { font-size: 0.45rem; padding: 2px 3px; }
+      td { font-size: 0.45rem; padding: 2px 3px; }
     }
   </style>
 </head>
@@ -115,7 +179,7 @@
     <span class="saved-indicator"><span class="dot gray" id="saveDot"></span><span id="saveStatus">nije</span></span>
   </div>
 
-  <!-- LOKACIJA - SAŽETIJA -->
+  <!-- LOKACIJA -->
   <div class="location-section">
     <div class="loc-selector">
       <input type="text" id="locationInput" placeholder="🔍 Lokacija" list="locationList" autocomplete="off">
@@ -127,7 +191,7 @@
     </div>
   </div>
 
-  <!-- FILTERI - SAŽETIJI -->
+  <!-- FILTERI -->
   <div class="filter-bar">
     <div class="filter-group"><label>Vrsta</label><select id="filterVrsta"><option value="">Sve</option></select></div>
     <div class="filter-group"><label>Podvrsta</label><select id="filterPodvrsta"><option value="">Sve</option></select></div>
@@ -148,8 +212,18 @@
   <!-- TABLICA (skrivena) -->
   <div class="table-wrapper" id="tableContainer" style="display:none;">
     <table>
-      <thead><tr><th>Šifra</th><th>Artikl</th><th>EAN</th><th>Vrsta</th><th>Podvrsta</th></tr></thead>
-      <tbody id="tableBody"><tr><td colspan="5" class="empty-state">Uvezite Excel datoteku</td></tr></tbody>
+      <thead>
+        <tr>
+          <th>Šifra</th>
+          <th>Artikl</th>
+          <th>EAN</th>
+          <th>Vrsta</th>
+          <th>Podvrsta</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr><td colspan="5" class="empty-state">Uvezite Excel datoteku</td></tr>
+      </tbody>
     </table>
   </div>
   
@@ -360,8 +434,8 @@
             <td><strong>${row.awtSifra || ''}</strong></td>
             <td>${row.artikl || ''}</td>
             <td>${row.ean || ''}</td>
-            <td><span class="badge-vrsta">${row.vrsta || ''}</span></td>
-            <td><span class="badge-podvrsta">${row.podvrsta || ''}</span></td>
+            <td>${row.vrsta ? `<span class="table-badge-vrsta">${row.vrsta}</span>` : ''}</td>
+            <td>${row.podvrsta ? `<span class="table-badge-podvrsta">${row.podvrsta}</span>` : ''}</td>
           </tr>`).join('');
         }
       }
