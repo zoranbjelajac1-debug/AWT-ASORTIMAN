@@ -13,7 +13,6 @@
     h1 { font-size: 1.2rem; font-weight: 600; color: #0b2b4a; display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
     h1 small { font-size: 0.65rem; font-weight: 400; color: #4a6f8e; margin-left: auto; }
     
-    /* SAŽETI IMPORT */
     .import-tools { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 4px; align-items: center; }
     .import-tools .file-label { background: #1f5b8e; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.6rem; font-weight: 500; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 3px; }
     .import-tools .file-label:active { background: #12406a; }
@@ -37,14 +36,14 @@
     .status-bar .saved-indicator .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #4caf50; }
     .status-bar .saved-indicator .dot.gray { background: #b0b0b0; }
     
-    /* LOKACIJA */
     .location-section { background: #eef3f9; border-radius: 12px; padding: 6px 10px 6px; margin: 4px 0 6px; }
     .loc-selector input { width: 100%; padding: 5px 10px; border-radius: 20px; border: 1px solid #cbd8e6; background: white; font-size: 0.75rem; color: #0b2b4a; font-weight: 500; outline: none; }
     .loc-selector input:focus { border-color: #2d7bb6; box-shadow: 0 0 0 2px rgba(45, 123, 182, 0.1); }
     .address-box { background: white; border-radius: 8px; padding: 3px 10px; margin-top: 3px; display: flex; flex-wrap: wrap; gap: 2px 12px; border-left: 2px solid #2d7bb6; font-size: 0.65rem; color: #1f3a54; }
     .address-box .label { color: #5b7c9a; margin-right: 1px; font-size: 0.55rem; }
+    .address-box .kupac-box { width: 100%; font-weight: 500; color: #0b2b4a; }
+    .address-box .kupac-box .label { font-weight: 400; }
     
-    /* FILTERI */
     .filter-bar { display: flex; flex-wrap: wrap; gap: 4px 6px; background: #f9fcff; padding: 4px 8px 4px; border-radius: 12px; margin: 4px 0 6px; align-items: center; border: 1px solid #e2ebf5; }
     .filter-group { flex: 1 0 60px; min-width: 50px; }
     .filter-group label { display: block; font-size: 0.5rem; font-weight: 600; color: #31638b; text-transform: uppercase; letter-spacing: 0.2px; margin-bottom: 1px; }
@@ -56,77 +55,30 @@
     .view-toggle button { background: #eef3f9; border: none; border-radius: 16px; padding: 2px 10px; font-size: 0.55rem; color: #1a4f77; cursor: pointer; }
     .view-toggle button.active { background: #1f5b8e; color: white; }
     
-    /* KARTICE */
     .cards-wrapper { border-radius: 12px; background: white; border: 1px solid #e9eff6; max-height: 52vh; overflow-y: auto; padding: 5px; }
     .item-card { background: #f8faff; border-radius: 8px; padding: 5px 10px; margin-bottom: 4px; border-left: 2px solid #2d7bb6; box-shadow: 0 1px 2px rgba(0,0,0,0.02); display: grid; grid-template-columns: auto 1fr; gap: 0 8px; font-size: 0.65rem; }
     .item-card:last-child { margin-bottom: 0; }
     .item-card .card-label { font-size: 0.5rem; font-weight: 600; color: #5b7c9a; text-transform: uppercase; letter-spacing: 0.2px; align-self: center; }
     .item-card .card-value { color: #1a3b58; word-break: break-word; align-self: center; }
-    .item-card .card-value.sifra { font-weight: 600; color: #0b2b4a; }
+    .item-card .card-value.sifra { font-weight: 600; color: #0b2b4a; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .item-card .card-value.sifra .kat-art-badge { background: #2d7bb6; color: white; font-size: 0.5rem; font-weight: 500; padding: 0px 8px; border-radius: 12px; line-height: 1.6; }
     .item-card .card-tags { display: flex; gap: 3px; flex-wrap: wrap; }
     .item-card .badge-vrsta { background: #dfe9f5; padding: 1px 8px; border-radius: 14px; font-size: 0.55rem; font-weight: 500; color: #1a4b74; }
     .item-card .badge-podvrsta { background: #eef3fa; padding: 1px 8px; border-radius: 14px; font-size: 0.55rem; color: #2d5580; }
     
-    /* TABLICA - POPRAVLJENO PRELAMANJE TEKSTA */
     .table-wrapper { border-radius: 12px; overflow-x: auto; background: white; border: 1px solid #e9eff6; max-height: 52vh; overflow-y: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 0.6rem; min-width: 280px; table-layout: fixed; }
-    th { 
-      background: #eef4fb; 
-      color: #1a3b58; 
-      font-weight: 600; 
-      padding: 4px 6px; 
-      text-align: left; 
-      border-bottom: 1.5px solid #d0ddee; 
-      position: sticky; 
-      top: 0; 
-      z-index: 2; 
-      font-size: 0.55rem;
-      word-wrap: break-word;
-      word-break: break-word;
-      hyphens: auto;
-    }
-    td { 
-      padding: 4px 6px; 
-      border-bottom: 1px solid #e5ecf5; 
-      color: #1f3852; 
-      font-size: 0.6rem;
-      word-wrap: break-word;
-      word-break: break-word;
-      hyphens: auto;
-      line-height: 1.4;
-      vertical-align: top;
-    }
+    th { background: #eef4fb; color: #1a3b58; font-weight: 600; padding: 4px 6px; text-align: left; border-bottom: 1.5px solid #d0ddee; position: sticky; top: 0; z-index: 2; font-size: 0.55rem; word-wrap: break-word; word-break: break-word; hyphens: auto; }
+    td { padding: 4px 6px; border-bottom: 1px solid #e5ecf5; color: #1f3852; font-size: 0.6rem; word-wrap: break-word; word-break: break-word; hyphens: auto; line-height: 1.4; vertical-align: top; }
     tr:last-child td { border-bottom: none; }
-    
-    /* Fiksne širine kolona - sve jednako raspoređeno */
     th:nth-child(1), td:nth-child(1) { width: 14%; min-width: 40px; }
     th:nth-child(2), td:nth-child(2) { width: 30%; min-width: 60px; }
     th:nth-child(3), td:nth-child(3) { width: 18%; min-width: 50px; }
     th:nth-child(4), td:nth-child(4) { width: 19%; min-width: 45px; }
     th:nth-child(5), td:nth-child(5) { width: 19%; min-width: 45px; }
     
-    /* Badge unutar tablice - prilagođeni */
-    .table-badge-vrsta { 
-      background: #dfe9f5; 
-      padding: 1px 6px; 
-      border-radius: 12px; 
-      font-size: 0.5rem; 
-      font-weight: 500; 
-      color: #1a4b74; 
-      display: inline-block;
-      word-break: break-word;
-      max-width: 100%;
-    }
-    .table-badge-podvrsta { 
-      background: #eef3fa; 
-      padding: 1px 6px; 
-      border-radius: 12px; 
-      font-size: 0.5rem; 
-      color: #2d5580; 
-      display: inline-block;
-      word-break: break-word;
-      max-width: 100%;
-    }
+    .table-badge-vrsta { background: #dfe9f5; padding: 1px 6px; border-radius: 12px; font-size: 0.5rem; font-weight: 500; color: #1a4b74; display: inline-block; word-break: break-word; max-width: 100%; }
+    .table-badge-podvrsta { background: #eef3fa; padding: 1px 6px; border-radius: 12px; font-size: 0.5rem; color: #2d5580; display: inline-block; word-break: break-word; max-width: 100%; }
     
     .empty-state { text-align: center; color: #798da3; padding: 16px 6px; font-style: italic; font-size: 0.7rem; }
     .footer-note { margin-top: 8px; font-size: 0.5rem; color: #6b85a0; text-align: center; border-top: 1px solid #dde6f0; padding-top: 8px; }
@@ -140,7 +92,6 @@
       th { font-size: 0.5rem; padding: 3px 4px; }
       td { font-size: 0.5rem; padding: 3px 4px; }
       .address-box { font-size: 0.6rem; }
-      /* Još manje širine za male ekrane */
       th:nth-child(1), td:nth-child(1) { width: 12%; min-width: 30px; }
       th:nth-child(2), td:nth-child(2) { width: 32%; min-width: 50px; }
       th:nth-child(3), td:nth-child(3) { width: 16%; min-width: 40px; }
@@ -160,7 +111,6 @@
 <div class="app-container" id="app">
   <h1>🧳 Asortiman <small>2.0</small></h1>
 
-  <!-- SAŽETI IMPORT -->
   <div class="import-tools">
     <label class="file-label" for="fileInput">📂 Excel</label>
     <input type="file" id="fileInput" accept=".xlsx,.xls">
@@ -179,8 +129,13 @@
     <span class="saved-indicator"><span class="dot gray" id="saveDot"></span><span id="saveStatus">nije</span></span>
   </div>
 
-  <!-- LOKACIJA -->
   <div class="location-section">
+    <div class="address-box" style="border-left-color: #f5a623; margin-bottom: 4px;">
+      <span style="width:100%; font-weight: 500; color: #0b2b4a;">
+        <span class="label">👤 Kupac:</span> 
+        <span id="kupacDisplay" style="font-weight:400;">-</span>
+      </span>
+    </div>
     <div class="loc-selector">
       <input type="text" id="locationInput" placeholder="🔍 Lokacija" list="locationList" autocomplete="off">
       <datalist id="locationList"></datalist>
@@ -188,28 +143,25 @@
     <div class="address-box" id="addressBox">
       <span><span class="label">Adr:</span> <span id="addrDisplay">-</span></span>
       <span><span class="label">Grad:</span> <span id="cityDisplay">-</span></span>
+      <span style="width:100%; margin-top: 1px;"><span class="label">Kat. lokacije:</span> <span id="katLokacijeDisplay">-</span></span>
     </div>
   </div>
 
-  <!-- FILTERI -->
   <div class="filter-bar">
     <div class="filter-group"><label>Vrsta</label><select id="filterVrsta"><option value="">Sve</option></select></div>
     <div class="filter-group"><label>Podvrsta</label><select id="filterPodvrsta"><option value="">Sve</option></select></div>
     <button class="reset-filters" id="resetFiltersBtn">✕</button>
   </div>
 
-  <!-- VIEW TOGGLE -->
   <div class="view-toggle">
     <button id="viewCards" class="active">📇 Kartice</button>
     <button id="viewTable">📋 Tablica</button>
   </div>
 
-  <!-- KARTICE -->
   <div class="cards-wrapper" id="cardsContainer">
     <div class="empty-state">Uvezite Excel datoteku</div>
   </div>
 
-  <!-- TABLICA (skrivena) -->
   <div class="table-wrapper" id="tableContainer" style="display:none;">
     <table>
       <thead>
@@ -233,7 +185,6 @@
 
 <script>
   (function(){
-    // ---------- IndexedDB ----------
     const DB_NAME = 'AsortimanDB';
     const STORE_NAME = 'articles';
     const DB_VERSION = 1;
@@ -283,13 +234,14 @@
       return new Promise((resolve, reject) => { tx.oncomplete = resolve; tx.onerror = (e) => reject(e.target.error); });
     }
 
-    // ---------- Global ----------
     let fullData = [], locationSet = new Set(), locationMap = new Map(), currentView = 'cards';
 
     const locationInput = document.getElementById('locationInput');
     const locationListEl = document.getElementById('locationList');
     const addrDisplay = document.getElementById('addrDisplay');
     const cityDisplay = document.getElementById('cityDisplay');
+    const kupacDisplay = document.getElementById('kupacDisplay');
+    const katLokacijeDisplay = document.getElementById('katLokacijeDisplay');
     const tableBody = document.getElementById('tableBody');
     const cardsContainer = document.getElementById('cardsContainer');
     const tableContainer = document.getElementById('tableContainer');
@@ -329,10 +281,30 @@
     }
 
     function updateAddressDisplay(loc) {
-      if (!loc || !locationMap.has(loc)) { addrDisplay.textContent = '-'; cityDisplay.textContent = '-'; return; }
+      if (!loc || !locationMap.has(loc)) { 
+        addrDisplay.textContent = '-'; 
+        cityDisplay.textContent = '-'; 
+        kupacDisplay.textContent = '-';
+        katLokacijeDisplay.textContent = '-';
+        return; 
+      }
       const info = locationMap.get(loc);
       addrDisplay.textContent = info.adresa || '-';
       cityDisplay.textContent = info.grad || '-';
+      kupacDisplay.textContent = info.kupac || '-';
+      
+      // Prikazujemo kategorije sortirane po učestalosti (od najčešće prema rjeđoj)
+      if (info.katLokacije && Array.isArray(info.katLokacije) && info.katLokacije.length > 0) {
+        // Sortiramo po frekvenciji (silazno - od najčešće prema rjeđoj)
+        const sorted = [...info.katLokacije].sort((a, b) => {
+          const freqA = info.katFrekvencija ? info.katFrekvencija[a] || 0 : 0;
+          const freqB = info.katFrekvencija ? info.katFrekvencija[b] || 0 : 0;
+          return freqB - freqA;
+        });
+        katLokacijeDisplay.textContent = sorted.join(' / ');
+      } else {
+        katLokacijeDisplay.textContent = '-';
+      }
     }
 
     function populateFilters() {
@@ -375,7 +347,6 @@
       else filterPodvrsta.value = '';
     }
 
-    // ---------- RENDER ----------
     function render() {
       let loc = locationInput.value.trim();
       if (loc && !locationSet.has(loc)) {
@@ -411,7 +382,11 @@
         } else {
           cardsContainer.innerHTML = filtered.map(row => `
             <div class="item-card">
-              <span class="card-label">Šifra</span><span class="card-value sifra">${row.awtSifra || '-'}</span>
+              <span class="card-label">Šifra</span>
+              <span class="card-value sifra">
+                ${row.awtSifra || '-'}
+                ${row.katArt ? `<span class="kat-art-badge">${row.katArt}</span>` : ''}
+              </span>
               <span class="card-label">Artikl</span><span class="card-value">${row.artikl || '-'}</span>
               <span class="card-label">EAN</span><span class="card-value">${row.ean || '-'}</span>
               <span class="card-label">Kat.</span>
@@ -441,21 +416,26 @@
       }
     }
 
-    // ---------- View toggle ----------
     viewCardsBtn.addEventListener('click', () => { currentView = 'cards'; viewCardsBtn.className = 'active'; viewTableBtn.className = ''; render(); });
     viewTableBtn.addEventListener('click', () => { currentView = 'table'; viewTableBtn.className = 'active'; viewCardsBtn.className = ''; render(); });
 
-    // ---------- Process Excel ----------
     async function processExcelData(workbook, sourceName = '') {
       const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
       const json = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
       if (!json || !json.length) { alert('Excel datoteka je prazna.'); return false; }
 
       const headers = Object.keys(json[0]);
+      
+      console.log('=== SVI STUPCI U EXCELU ===');
+      headers.forEach((h, i) => console.log(`${i+1}. "${h}"`));
+      console.log('===============================');
+      
       const findKey = (patterns) => {
         for (const p of patterns) {
           const found = headers.find(h => h.trim().toUpperCase() === p.toUpperCase());
           if (found) return found;
+          const partial = headers.find(h => h.trim().toUpperCase().includes(p.toUpperCase()));
+          if (partial) return partial;
         }
         return null;
       };
@@ -463,11 +443,18 @@
       const keyLokacija = findKey(['LOKACIJA']);
       const keyAdresa = findKey(['ADRESA']);
       const keyGrad = findKey(['GRAD']);
-      const keyAwtSifra = findKey(['AWT ŠIFRA']);
-      const keyArtikl = findKey(['ARTIKL']);
-      const keyEAN = findKey(['EAN']);
-      const keyVrsta = findKey(['VRSTA']);
-      const keyPodvrsta = findKey(['PODVRSTA']);
+      const keyKupac = findKey(['KUPAC']);
+      const keyKatLokacije = findKey(['KAT.', 'KAT', 'KATEGORIJA', 'KAT LOKACIJE', 'KAT LOK']);
+      const keyKatArt = findKey(['KAT.ART', 'KAT ART', 'KATART', 'KAT ARTIKL']);
+      const keyAwtSifra = findKey(['AWT ŠIFRA', 'AWT SIFRA', 'ŠIFRA', 'SIFRA']);
+      const keyArtikl = findKey(['ARTIKL', 'NAZIV', 'OPIS']);
+      const keyEAN = findKey(['EAN', 'BARCODE', 'BAR KOD']);
+      const keyVrsta = findKey(['VRSTA', 'KATEGORIJA']);
+      const keyPodvrsta = findKey(['PODVRSTA', 'SUBKATEGORIJA']);
+
+      console.log('Pronađeni ključevi:');
+      console.log('keyLokacija:', keyLokacija);
+      console.log('keyKatLokacije:', keyKatLokacije);
 
       if (!keyLokacija || !keyAdresa || !keyGrad || !keyAwtSifra || !keyArtikl || !keyEAN) {
         alert('Nedostaju stupci: LOKACIJA, ADRESA, GRAD, AWT ŠIFRA, ARTIKL, EAN');
@@ -478,25 +465,68 @@
       const locSet = new Set();
       const locMap = new Map();
 
+      // Prvo skupimo sve podatke po lokacijama
       for (const row of json) {
         const lokacija = normalizeStr(row[keyLokacija]);
         if (!lokacija) continue;
+        
         const adresa = normalizeStr(row[keyAdresa]);
         const grad = normalizeStr(row[keyGrad]);
+        const kupac = keyKupac ? normalizeStr(row[keyKupac]) : '';
+        const katLokacije = keyKatLokacije ? normalizeStr(row[keyKatLokacije]) : '';
+        
         locSet.add(lokacija);
-        if (!locMap.has(lokacija)) locMap.set(lokacija, { adresa, grad });
-        else {
-          const ex = locMap.get(lokacija);
-          if (!ex.adresa && adresa) ex.adresa = adresa;
-          if (!ex.grad && grad) ex.grad = grad;
+        
+        if (!locMap.has(lokacija)) {
+          locMap.set(lokacija, { 
+            adresa, 
+            grad, 
+            kupac, 
+            katLokacije: [], // niz kategorija
+            katFrekvencija: {} // objekt za brojanje učestalosti
+          });
         }
+        
+        // Dodajemo kategorije i brojimo učestalost
+        if (katLokacije) {
+          // Ako kategorija sadrži više vrijednosti odvojenih zarezom, razbijamo ih
+          const katValues = katLokacije.split(',').map(s => s.trim()).filter(s => s);
+          katValues.forEach(k => {
+            const info = locMap.get(lokacija);
+            // Dodajemo u niz ako već ne postoji
+            if (!info.katLokacije.includes(k)) {
+              info.katLokacije.push(k);
+            }
+            // Brojimo učestalost
+            if (!info.katFrekvencija[k]) {
+              info.katFrekvencija[k] = 0;
+            }
+            info.katFrekvencija[k]++;
+          });
+        }
+        
+        // Spremamo podatke o artiklima
         const awtSifra = normalizeStr(row[keyAwtSifra]);
         const artikl = normalizeStr(row[keyArtikl]);
         const ean = normalizeStr(row[keyEAN]);
-        const vrsta = normalizeStr(row[keyVrsta] || '');
-        const podvrsta = normalizeStr(row[keyPodvrsta] || '');
+        const vrsta = keyVrsta ? normalizeStr(row[keyVrsta]) : '';
+        const podvrsta = keyPodvrsta ? normalizeStr(row[keyPodvrsta]) : '';
+        const katArt = keyKatArt ? normalizeStr(row[keyKatArt]) : '';
+        
         if (awtSifra || artikl || ean) {
-          newData.push({ lokacija, adresa, grad, awtSifra, artikl, ean, vrsta, podvrsta });
+          newData.push({ 
+            lokacija, 
+            adresa, 
+            grad, 
+            kupac, 
+            katLokacije, // zadržavamo i originalnu vrijednost za svaki artikl
+            awtSifra, 
+            artikl, 
+            ean, 
+            vrsta, 
+            podvrsta, 
+            katArt 
+          });
         }
       }
 
@@ -521,7 +551,6 @@
       return true;
     }
 
-    // ---------- GitHub Import ----------
     async function importFromGitHub(url) {
       githubStatus.textContent = '⏳ Preuzimanje...';
       githubStatus.className = 'import-status loading';
@@ -542,7 +571,21 @@
           locationMap = new Map();
           for (const row of fullData) {
             locationSet.add(row.lokacija);
-            if (!locationMap.has(row.lokacija)) locationMap.set(row.lokacija, { adresa: row.adresa || '', grad: row.grad || '' });
+            if (!locationMap.has(row.lokacija)) {
+              let katLok = row.katLokacije || [];
+              if (typeof katLok === 'string') {
+                katLok = katLok.split(',').map(s => s.trim()).filter(s => s);
+              }
+              if (!Array.isArray(katLok)) katLok = [];
+              // Za JSON ne znamo frekvenciju, pa ih prikazujemo kako su zapisani
+              locationMap.set(row.lokacija, { 
+                adresa: row.adresa || '', 
+                grad: row.grad || '', 
+                kupac: row.kupac || '', 
+                katLokacije: katLok,
+                katFrekvencija: {}
+              });
+            }
           }
           await saveAllData(fullData);
           updateLocationDatalist();
@@ -575,7 +618,6 @@
       }
     }
 
-    // ---------- Load from DB ----------
     async function loadFromDB() {
       try {
         const data = await loadAllData();
@@ -585,7 +627,20 @@
         locationMap = new Map();
         for (const row of fullData) {
           locationSet.add(row.lokacija);
-          if (!locationMap.has(row.lokacija)) locationMap.set(row.lokacija, { adresa: row.adresa || '', grad: row.grad || '' });
+          if (!locationMap.has(row.lokacija)) {
+            let katLok = row.katLokacije || [];
+            if (typeof katLok === 'string') {
+              katLok = katLok.split(',').map(s => s.trim()).filter(s => s);
+            }
+            if (!Array.isArray(katLok)) katLok = [];
+            locationMap.set(row.lokacija, { 
+              adresa: row.adresa || '', 
+              grad: row.grad || '', 
+              kupac: row.kupac || '', 
+              katLokacije: katLok,
+              katFrekvencija: row.katFrekvencija || {}
+            });
+          }
         }
         updateLocationDatalist();
         populateFilters();
@@ -600,7 +655,6 @@
       } catch(e) { return false; }
     }
 
-    // ---------- Events ----------
     fileInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -647,7 +701,20 @@
         locationMap = new Map();
         for (const row of fullData) {
           locationSet.add(row.lokacija);
-          if (!locationMap.has(row.lokacija)) locationMap.set(row.lokacija, { adresa: row.adresa || '', grad: row.grad || '' });
+          if (!locationMap.has(row.lokacija)) {
+            let katLok = row.katLokacije || [];
+            if (typeof katLok === 'string') {
+              katLok = katLok.split(',').map(s => s.trim()).filter(s => s);
+            }
+            if (!Array.isArray(katLok)) katLok = [];
+            locationMap.set(row.lokacija, { 
+              adresa: row.adresa || '', 
+              grad: row.grad || '', 
+              kupac: row.kupac || '', 
+              katLokacije: katLok,
+              katFrekvencija: row.katFrekvencija || {}
+            });
+          }
         }
         await saveAllData(fullData);
         updateLocationDatalist();
@@ -719,10 +786,8 @@
       render();
     });
 
-    // ---------- Init ----------
     loadFromDB();
 
-    // ---------- Service Worker ----------
     if ('serviceWorker' in navigator) {
       const swCode = `const CACHE="asortiman-v2"; const FILES=["./"]; self.addEventListener("install",e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)))); self.addEventListener("fetch",e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));`;
       const blob = new Blob([swCode], { type: 'text/javascript' });
